@@ -4,9 +4,13 @@
 # In this game users choose a car (numbered 1 to 12).
 # Then they choose a ‘race distance’ which should be between 5 and 15.
 # A random number from 1-12 is generated and if the car’s number comes up, the car moves forward one space.
+# The user can choose to race again after a race.
+
+
 import random
 import time
 
+# Welcomes the user and introduces the game
 print("Welcome to 🔥Turbo Titans🔥! \nIn this game, you can choose a car (numbered 1 to 12). \nThen, you can "
       "choose a the distance of the race, which is be between 5 and 15. \nAfter the race starts, a "
       "random number from 1-12 is generated each turn, \nand if the car’s number comes up, the car "
@@ -24,19 +28,19 @@ while True:
     else:
         print("Please enter either yes or no.")
 
-
-garage = ["(1)  🏎", "(2)  🚌", "(3)  🚚", "(4)  🚐", "(5)  🚑", "(6)  🚒", "(7)  🚓", "️(8)  🚕",
+# Shows a list of cars available
+garage = ["(1)  🚜", "(2)  🚌", "(3)  🚚", "(4)  🚐", "(5)  🚑", "(6)  🚒", "(7)  🚓", "️(8)  🚕",
           "(9)  🚗", "(10) 🚙", "(11) 🚛", "(12) 🛻", " "]
 print("\nCars in garage: ")
 for item in garage:
     print(item)
 
-# Ask the user to choose a number and validate it
+# Ask the user to choose a car number and validate it
 while True:
     try:
         chosen_car = int(input("Please choose your race car's number (from 1 to 12). Your choice: "))
         if 1 <= chosen_car <= 12:
-            print("You have chosen car number {}.".format(chosen_car))
+            print(f"You have chosen car number {chosen_car}. You win if car number {chosen_car} wins.")
             break
         else:
             print("This car does not exist. Please choose a number between 1 and 12.")
@@ -56,10 +60,19 @@ while True:
     except ValueError:
         print("Please enter a valid integer.")
 
+# Ready to start the race
 print("\nStarting the race...")
-time.sleep(5)
+time.sleep(1)
+print("3!")
+time.sleep(1)
+print("2!")
+time.sleep(1)
+print("1!")
+time.sleep(1)
+print("🎌GO!🎌")
 
-cars = {1: "(1)  🏎",
+
+cars = {1: "(1)  🚜",
         2: "(2)  🚌",
         3: "(3)  🚚",
         4: "(4)  🚐",
@@ -77,52 +90,60 @@ cars = {1: "(1)  🏎",
 positions = {car: 0 for car in cars}
 
 
-# Function to generate a random number
+# Function to generate a random number and move the cars
 def rng():
+    turn = 0
     while True:
-        rand_num = random.randint(1, 12)
+        rand_num = random.randint(1, 12)  # Generates a random number between 1 and 12
+        if 5 <= distance < 8:  # Speeds up each turn depending on the distance
+            time.sleep(0.6)
+        elif 8 <= distance < 12:
+            time.sleep(0.4)
+        elif 12 <= distance <= 15:
+            time.sleep(0.25)
+        turn += 1
+        print("🏁" * (4 + distance))
+        print(f"~Turn {turn}~")
         print("Generating random number...\n"
               f"Number generated: {rand_num}. Car number {rand_num} will move forward one space.")
+
         # Check if any of the cars move forward
         for car in cars:
-            if rand_num == car:
-                positions[car] += 1
-                if 5 <= distance < 8:
-                    time.sleep(0.75)
-                elif 8 <= distance < 12:
-                    time.sleep(0.5)
-                elif 12 <= distance <= 15:
-                    time.sleep(0.3)
-
+            if rand_num == car:  # Moves a car forward 1 'space' (2 spaces in reality)
+                positions[car] += 2
+        time.sleep(0.25)
         # Print the current race standings
-        print('-' * 20)
+        print("🏁" * (4 + distance))
         for car in cars:
             print(f"{cars[car]}:{' ' * positions[car]}‍💨")
 
-            # Check if any car has won the race
+
+# Check if any car has won the race
         for car in cars:
-            if positions[car] == distance:
-                time.sleep(1)
+            if positions[car] == distance * 2:
+                print("🏁" * (4 + distance))
+                time.sleep(1.5)
                 print(f"\n🏁 Car {car} has moved {distance} spaces! Car {car} wins! 🎉")
-                if car == chosen_car:
-                    print("🏆 Victory! 🎉")
-                else:
-                    print(f"🏳 Defeat... Your car only moved {positions[chosen_car]} spaces.")
-                while True:
+                if car == chosen_car:  # Shows that the user won
+                    print("🏆 Victory! Your car has won! 🎉")
+                else:  # Shows that the user lost
+                    print(f"🏳 Defeat... Your car only moved {positions[chosen_car] / 2 :.0f} spaces.")
+                while True:  # Ask if user wants to race again
                     race_again = input(
                         f"Would you like to start another race? Your chosen car (car {chosen_car}) and the race "
                         f"track ({distance} spaces) will remain the same. Your answer: ").strip().lower()
-                    if race_again == "yes":
+                    if race_again == "yes":  # Starts another race
                         for car in cars:
                             positions[car] = 0
                         print("Starting another race...")
-                        time.sleep(1)
+                        time.sleep(1.5)
                         rng()
-                    elif race_again == "no":
+                    elif race_again == "no":  # Thanks the user and ends the game
                         print("Thanks for playing 🔥Turbo Titans🔥!")
                         exit()
                     else:
                         print("Please enter either yes or no.")
 
 
+# Calls the function
 rng()
