@@ -60,18 +60,38 @@ while True:
     except ValueError:
         print("Please enter a valid integer.")
 
+# Ask the user to choose the speed for the game
+while True:
+    try:
+        speed = float(input("Please enter the speed that the game progresses (from 1 to 5). The higher the speed, "
+                            "the shorter time it will take for each turn to progress.\nThis does not affect the results"
+                            " of the race in any way. Enter 1 to proceed with the default speed.\nYour answer: "))
+        if 1 < speed <= 5:
+            print(f"The game will progress {speed} times faster.")
+            break
+        elif speed == 1:
+            print("The game will proceed at the normal speed.")
+            break
+        else:
+            print("Please enter a number between 1 and 5.")
+    except ValueError:
+        print("Please enter a valid number.")
+
+
 # Ready to start the race
-print("\nStarting the race...")
-time.sleep(1)
-print("3!")
-time.sleep(1)
-print("2!")
-time.sleep(1)
-print("1!")
-time.sleep(1)
-print("🎌GO!🎌")
+def ready():
+    print("\nStarting the race...")
+    time.sleep(1)
+    print("3!")
+    time.sleep(1)
+    print("2!")
+    time.sleep(1)
+    print("1!")
+    time.sleep(1)
+    print("🎌GO!🎌")
 
 
+# Sets up the starting positions for the cars
 cars = {1: "(1)  🚜",
         2: "(2)  🚌",
         3: "(3)  🚚",
@@ -86,21 +106,22 @@ cars = {1: "(1)  🚜",
         12: "(12) 🛻"
         }
 
-# Sets up the starting positions for the cars
 positions = {car: 0 for car in cars}
 
 
 # Function to generate a random number and move the cars
 def rng():
+    ready()
     turn = 0
     while True:
         rand_num = random.randint(1, 12)  # Generates a random number between 1 and 12
-        if 5 <= distance < 8:  # Speeds up each turn depending on the distance
-            time.sleep(0.6)
-        elif 8 <= distance < 12:
-            time.sleep(0.4)
+        if 5 <= distance <= 8:  # Speeds up each turn depending on the distance and speed selected
+            time.sleep(0.75 / speed)
+        elif 8 < distance < 12:
+            time.sleep(0.5 / speed)
         elif 12 <= distance <= 15:
-            time.sleep(0.25)
+            time.sleep(0.25 / speed)
+
         turn += 1
         print("🏁" * (4 + distance))
         print(f"~Turn {turn}~")
@@ -111,19 +132,18 @@ def rng():
         for car in cars:
             if rand_num == car:  # Moves a car forward 1 'space' (2 spaces in reality)
                 positions[car] += 2
-        time.sleep(0.25)
+        time.sleep(0.3 / speed)
         # Print the current race standings
         print("🏁" * (4 + distance))
         for car in cars:
             print(f"{cars[car]}:{' ' * positions[car]}‍💨")
 
-
-# Check if any car has won the race
+        # Check if any car has won the race
         for car in cars:
             if positions[car] == distance * 2:
                 print("🏁" * (4 + distance))
                 time.sleep(1.5)
-                print(f"\n🏁 Car {car} has moved {distance} spaces! Car {car} wins! 🎉")
+                print(f"\n🏁 It took {turn} turns for car {car} to move {distance} spaces! Car {car} wins! 🎉")
                 if car == chosen_car:  # Shows that the user won
                     print("🏆 Victory! Your car has won! 🎉")
                 else:  # Shows that the user lost
