@@ -1,10 +1,10 @@
 # @author: cyrus
-# I am building a car racing game called "Turbo Titans" using Python. You are allowed to make
-# this a console program – text-based, or make it visual using libraries like Pygame.
+# I am building a car racing game called "Turbo Titans" using Python.
 # In this game users choose a car (numbered 1 to 12).
 # Then they choose a ‘race distance’ which should be between 5 and 15.
-# A random number from 1-12 is generated and if the car’s number comes up, the car moves forward one space.
-# The user can choose to race again after a race.
+# Then they choose the game speed, which should be between 1 and 5
+# A random number from 1-12 is generated and if the car’s number comes up, the car moves forward one space
+# The user can choose to race again after finishing a race.
 
 
 import random
@@ -23,12 +23,12 @@ while True:
         print("✅ Starting the game...")
         break
     elif begin == "no":
-        print("❌")
+        print("❌ Exiting...")
         exit()
     else:
         print("Please enter either yes or no.")
 
-# Shows a list of cars available
+# Shows a list of cars available in the garage
 garage = ["(1)  🚜", "(2)  🚌", "(3)  🚚", "(4)  🚐", "(5)  🚑", "(6)  🚒", "(7)  🚓", "️(8)  🚕",
           "(9)  🚗", "(10) 🚙", "(11) 🚛", "(12) 🛻", " "]
 print("\nCars in garage: ")
@@ -78,7 +78,7 @@ while True:
         print("Please enter a valid number.")
 
 
-# Ready to start the race
+# A function that announces the start of the race
 def ready():
     print("\nStarting the race...")
     time.sleep(1)
@@ -88,7 +88,7 @@ def ready():
     time.sleep(1)
     print("1!")
     time.sleep(1)
-    print("🎌GO!🎌")
+    print("🎌GO!🎌\n")
 
 
 # Sets up the starting positions for the cars
@@ -150,10 +150,11 @@ def rng():
                     print(f"🏳 Defeat... Your car only moved {positions[chosen_car] / 2 :.0f} spaces.")
                 while True:  # Ask if user wants to race again
                     race_again = input(
-                        f"Would you like to start another race? Your chosen car (car {chosen_car}) and the race "
-                        f"track ({distance} spaces) will remain the same. Your answer: ").strip().lower()
+                        f"Would you like to start another race? Your chosen car (car {chosen_car}), race "
+                        f"track ({distance} spaces) and game speed ({speed}x) will remain the same. "
+                        f"\nYour answer: ").strip().lower()
                     if race_again == "yes":  # Starts another race
-                        for car in cars:
+                        for car in cars:  # Resets car positions
                             positions[car] = 0
                         print("Starting another race...")
                         time.sleep(1.5)
