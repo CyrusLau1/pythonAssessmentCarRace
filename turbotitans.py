@@ -3,27 +3,34 @@
 # In this game users choose a car (numbered 1 to 12).
 # Then they choose a ‘race distance’ which should be between 5 and 15.
 # Then they choose the game speed, which should be between 1 and 5
-# A random number from 1-12 is generated and if the car’s number comes up, the car moves forward one space
+# A random number from 1-12 is generated and if the car’s number comes up,
+# the car moves forward one space
 # The user can choose to race again after finishing a race.
 
 
 import random
 import time
+import colorama
+from colorama import Fore, Style
+colorama.init(autoreset=True)
 
 # Welcomes the user and introduces the game
-print("Welcome to 🔥Turbo Titans🔥! \nIn this game, you can choose a car (numbered 1 to 12). \nThen, you can "
-      "choose a the distance of the race, which is be between 5 and 15. \nAfter the race starts, a "
-      "random number from 1-12 is generated each turn, \nand if the car’s number comes up, the car "
-      "moves forward one space. \nThe winning car is the one which completes the race distance the first. 🏆")
+print(f"Welcome to {Fore.RED}{Style.BRIGHT}🔥Turbo Titans🔥{Fore.RESET}{Style.NORMAL}! "
+      f"\nIn this game, you can choose a {Style.BRIGHT}car (numbered 1 to 12){Style.NORMAL}. "
+      f"\nThen, you can choose the {Style.BRIGHT}distance {Style.NORMAL}of the race, "
+      f"which must be {Style.BRIGHT}between 5 and 15{Style.NORMAL}. \nAfter the race starts, "
+      f"a random number from 1-12 is generated each turn, \nand if the car’s number comes up, "
+      f"the car moves forward one space. "
+      f"\nThe winning car is the one which completes the race distance the first. 🏆")
 
 # Ask if the user wants to start
 while True:
     begin = input("Would you like to start? Your answer: ").lower().strip()
     if begin == "yes":
-        print("✅ Starting the game...")
+        print(Fore.GREEN + "✅ Starting the game...")
         break
     elif begin == "no":
-        print("❌ Exiting...")
+        print(Fore.RED + "❌ Exiting...")
         exit()
     else:
         print("Please enter either yes or no.")
@@ -32,8 +39,8 @@ while True:
 garage = ["(1)  🚜", "(2)  🚌", "(3)  🚚", "(4)  🚐", "(5)  🚑", "(6)  🚒", "(7)  🚓", "️(8)  🚕",
           "(9)  🚗", "(10) 🚙", "(11) 🚛", "(12) 🛻", " "]
 print("\nCars in garage: ")
-for item in garage:
-    print(item)
+for c in garage:
+    print(c)
 
 # Ask the user to choose a car number and validate it
 while True:
@@ -63,14 +70,15 @@ while True:
 # Ask the user to choose the speed for the game
 while True:
     try:
-        speed = float(input("Please enter the speed that the game progresses (from 1 to 5). The higher the speed, "
-                            "the shorter time it will take for each turn to progress.\nThis does not affect the results"
-                            " of the race in any way. Enter 1 to proceed with the default speed.\nYour answer: "))
+        speed = float(input("Please enter the speed that the game progresses (from 1 to 5). The higher "
+                            "the speed, the shorter time it will take for each turn to progress.\nThis does "
+                            "not affect the results of the race in any way. Enter 1 to proceed with the "
+                            "default speed.\nYour answer: "))
         if 1 < speed <= 5:
             print(f"The game will progress {speed} times faster.")
             break
         elif speed == 1:
-            print("The game will proceed at the normal speed.")
+            print("The game will proceed at the default speed.")
             break
         else:
             print("Please enter a number between 1 and 5.")
@@ -82,13 +90,13 @@ while True:
 def ready():
     print("\nStarting the race...")
     time.sleep(1)
-    print("3!")
+    print(Fore.RED + "3!")
     time.sleep(1)
-    print("2!")
+    print(Fore.YELLOW + "2!")
     time.sleep(1)
-    print("1!")
+    print(Fore.GREEN + "1!")
     time.sleep(1)
-    print("🎌GO!🎌\n")
+    print(Style.BRIGHT + "🎌GO!🎌\n")
 
 
 # Sets up the starting positions for the cars
@@ -145,22 +153,22 @@ def rng():
                 time.sleep(1.5)
                 print(f"\n🏁 It took {turn} turns for car {car} to move {distance} spaces! Car {car} wins! 🎉")
                 if car == chosen_car:  # Shows that the user won
-                    print("🏆 Victory! Your car has won! 🎉")
+                    print(Fore.GREEN + "🏆 Victory! Your car has won! 🎉")
                 else:  # Shows that the user lost
-                    print(f"🏳 Defeat... Your car only moved {positions[chosen_car] / 2 :.0f} spaces.")
+                    print(Fore.RED + f"🏳 Defeat... Your car only moved {positions[chosen_car] / 2 :.0f} spaces.")
                 while True:  # Ask if user wants to race again
                     race_again = input(
                         f"Would you like to start another race? Your chosen car (car {chosen_car}), race "
                         f"track ({distance} spaces) and game speed ({speed}x) will remain the same. "
                         f"\nYour answer: ").strip().lower()
                     if race_again == "yes":  # Starts another race
-                        for car in cars:  # Resets car positions
-                            positions[car] = 0
+                        for car1 in cars:  # Resets car positions
+                            positions[car1] = 0
                         print("Starting another race...")
                         time.sleep(1.5)
                         rng()
                     elif race_again == "no":  # Thanks the user and ends the game
-                        print("Thanks for playing 🔥Turbo Titans🔥!")
+                        print(f"Thanks for playing {Fore.RED}{Style.BRIGHT}🔥Turbo Titans🔥{Fore.RESET}{Style.NORMAL}!")
                         exit()
                     else:
                         print("Please enter either yes or no.")
