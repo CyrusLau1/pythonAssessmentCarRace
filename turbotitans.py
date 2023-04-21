@@ -123,7 +123,7 @@ cars = {1: "(1)  🚜",
 positions = {car: 0 for car in cars}
 
 # Sets up the values of some variables which will be needed later in the game
-coins = 10000
+coins = 0
 coin_multi = 1
 space_multi = 0
 buddy = 0
@@ -162,7 +162,7 @@ def shop():
     while True:
         try:  # Asks whether the user would like to open the shop ,or inventory
             open_shop = input("Would you like to open the shop to buy upgrades? Enter 'yes' to open shop, 'no' to "
-                              "skip, or enter 'inventory' to see all purchased upgrades. Your answer: ")
+                              "skip, \nor enter 'inventory' to see all purchased upgrades. Your answer: ")
 
             if open_shop == "yes":
                 print(Fore.BLUE + "⬆️ Shop: ")  # Shows the upgrades available in the shop
