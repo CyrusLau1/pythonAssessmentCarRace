@@ -355,11 +355,11 @@ def rng():
                         time.sleep(1.5)
                         rng()
                     elif race_again == "no":  # Thanks the user and ends the game
-                        confirm_exit = input("Exit the game? Your answer: ")
+                        confirm_exit = input("Exit the game? Your answer: ").strip().lower()
                         if confirm_exit == "yes":  # Asks user to confirm exiting the game
                             print(f"Thanks for playing {Fore.RED}{Style.BRIGHT}🔥Turbo Titans🔥{Fore.RESET}{Style.NORMAL}!")
                             exit()
-                        elif confirm_exit ==  "no":
+                        elif confirm_exit == "no":
                             continue
                         else:
                             print("Enter either yes or no.")
