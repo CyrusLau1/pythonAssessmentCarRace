@@ -113,7 +113,7 @@ cars = {1: "(1)  🚜",
         5: "(5)  🚑",
         6: "(6)  🚒",
         7: "(7)  🚓",
-        8: "️(8)  🚕",
+        8: "(8)  🚕",
         9: "(9)  🚗",
         10: "(10) 🚙",
         11: "(11) 🚛",
@@ -220,7 +220,7 @@ def shop():
                                             f"Your car is positioned one space forward before the start of the race.{Fore.YELLOW}(300🪙)")
                             inventory.append(f"[3] {Fore.GREEN}Head Start{Fore.RESET}: "
                                              f"Your car is positioned one space forward before the start of the race.{Fore.YELLOW}(300🪙)")
-                            coins -= 200
+                            coins -= 300
                         elif purchase == "3" and coins < 300:
                             print(Fore.RED + "Insufficient amount of coins.")
                         elif purchase == "4" and buddy != 0:
@@ -240,13 +240,13 @@ def shop():
                                                 f"Choose another racer to become your buddy. You also win if their car wins.{Fore.YELLOW}(500🪙)")
                                 inventory.append(f"[4] {Fore.GREEN}Buddies{Fore.RESET}: "
                                                  f"Choose another racer to become your buddy. You also win if their car wins.{Fore.YELLOW}(500🪙)")
-                                coins -= 400
+                                coins -= 500
                         elif purchase == "4" and coins < 500:
                             print(Fore.RED + "Insufficient amount of coins.")
                         elif purchase == "5" and space_multi == 2:
                             print(Fore.RED + "You have already purchased this bonus.")
                         elif purchase == "5" and coins >= 800:
-                            print(Fore.GREEN + "You have purchased Faster Race Car.")
+                            print(Fore.GREEN + "You have purchased Turbo Titan Champions.")
                             space_multi += 2
                             upgrades.remove(f"[5] {Fore.GREEN}Turbo Titans Champions{Fore.RESET}: "
                                             f"You and your buddy's cars (if Buddies is purchased) move forward two spaces instead of one when they get "
@@ -254,7 +254,7 @@ def shop():
                             inventory.append(f"[5] {Fore.GREEN}Turbo Titans Champions{Fore.RESET}: "
                                              f"You and your buddy's cars (if Buddies is purchased) move forward two spaces instead of one when they get "
                                              f"chosen.{Fore.YELLOW}(800🪙)")
-                            coins -= 500
+                            coins -= 800
                         elif purchase == "5" and coins < 800:
                             print(Fore.RED + "Insufficient amount of coins.")
                         elif purchase == "close":  # Closes the shop
@@ -355,8 +355,14 @@ def rng():
                         time.sleep(1.5)
                         rng()
                     elif race_again == "no":  # Thanks the user and ends the game
-                        print(f"Thanks for playing {Fore.RED}{Style.BRIGHT}🔥Turbo Titans🔥{Fore.RESET}{Style.NORMAL}!")
-                        exit()
+                        confirm_exit = input("Exit the game? Your answer: ")
+                        if confirm_exit == "yes":  # Asks user to confirm exiting the game
+                            print(f"Thanks for playing {Fore.RED}{Style.BRIGHT}🔥Turbo Titans🔥{Fore.RESET}{Style.NORMAL}!")
+                            exit()
+                        elif confirm_exit ==  "no":
+                            continue
+                        else:
+                            print("Enter either yes or no.")
                     else:
                         print("Please enter either yes or no.")
 
