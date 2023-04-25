@@ -246,7 +246,7 @@ def shop():
                         elif purchase == "5" and space_multi == 2:
                             print(Fore.RED + "You have already purchased this bonus.")
                         elif purchase == "5" and coins >= 800:
-                            print(Fore.GREEN + "You have purchased Turbo Titan Champions.")
+                            print(Fore.GREEN + "You have purchased Turbo Titans Champions.")
                             space_multi += 2
                             upgrades.remove(f"[5] {Fore.GREEN}Turbo Titans Champions{Fore.RESET}: "
                                             f"You and your buddy's cars (if Buddies is purchased) move forward two spaces instead of one when they get "
